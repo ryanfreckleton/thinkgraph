@@ -4,14 +4,6 @@ import sys
 import pygraphviz
 import parser
 
-import toolz
-import pyrsistent
-import json
-import string
-
-from pprint import pprint
-
-
 Entity = collections.namedtuple("Entity", "id label cls")
 
 attrs = {
@@ -27,7 +19,6 @@ class Semantics(object):
         self.nodes = set()
         self.edges = set()
         self.conflicts = set()
-        self.letters = list(string.uppercase)
 
     def next_id(self):
         self.i += 1
@@ -56,7 +47,6 @@ def main(f):
     ast = p.parse(f.read(), rule_name="statements", semantics = semantic_graph)
     g = create_graph(semantic_graph)
     output(g)
-
 
 # imperative
 def output(g):
