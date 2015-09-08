@@ -10,7 +10,8 @@ attrs = {
         None : dict(),
         'inj' : dict(style="filled"),
         'obs' : dict(shape="plaintext"),
-        'and' : dict(shape="ellipse")
+        'and' : dict(shape="ellipse"),
+        'red' : dict(color="red", fontcolor="red"),
       }
 
 class Semantics(object):
@@ -32,13 +33,13 @@ class Semantics(object):
 
     def relation(self, ast):
         if len(ast.source) == 1:
-            self.edges.add((ast.source[0], ast.destination[0]))
+            self.edges.add((ast.source[0], ast.destination))
         else:
-            letter = self.next_id()
-            self.nodes.add(Entity(letter, "AND", "and"))
+            node_id = self.next_id()
+            self.nodes.add(Entity(node_id, "AND", "and"))
             for s in ast.source:
-                self.edges.add((s, letter))
-            self.edges.add((letter, ast.destination[0]))
+                self.edges.add((s, node_id))
+            self.edges.add((node_id, ast.destination))
 
 # imperative
 def main(f):
@@ -62,6 +63,7 @@ def create_graph(semantic_graph):
     g.add_edges_from(semantic_graph.edges)
     for a, b in semantic_graph.conflicts:
         g.add_edge(a, b, dir="none", constraint=False, color="red", penwidth=7)
+        g.add_subgraph([a,b], rank="same")
     return g.to_string()
 
 if __name__ == "__main__":
