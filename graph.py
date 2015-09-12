@@ -67,5 +67,8 @@ def create_graph(semantic_graph):
     return g.to_string()
 
 if __name__ == "__main__":
-    with open(sys.argv[1]) as f:
-        main(f)
+    if not sys.argv[1:]:
+        main(sys.stdin)
+    else:
+        with open(sys.argv[1]) as f:
+            main(f)
