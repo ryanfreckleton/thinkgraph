@@ -19,6 +19,7 @@ class Semantics(object):
         self.i = 0
         self.nodes = set()
         self.edges = set()
+        self.and_edges = set()
         self.conflicts = set()
 
     def next_id(self):
@@ -38,7 +39,7 @@ class Semantics(object):
             node_id = self.next_id()
             self.nodes.add(Entity(node_id, "AND", "and"))
             for s in ast.source:
-                self.edges.add((s, node_id))
+                self.and_edges.add((s, node_id))
             self.edges.add((node_id, ast.destination))
 
 # imperative
@@ -61,6 +62,7 @@ def create_graph(semantic_graph):
     for identifier, label, cls in semantic_graph.nodes:
         g.add_node(identifier, label=label, **attrs[cls])
     g.add_edges_from(semantic_graph.edges)
+    g.add_edges_from(semantic_graph.and_edges, dir="none")
     for a, b in semantic_graph.conflicts:
         g.add_edge(a, b, dir="none", constraint=False, color="red", penwidth=7)
         g.add_subgraph([a,b], rank="same")
