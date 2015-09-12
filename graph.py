@@ -67,7 +67,8 @@ def create_graph(semantic_graph):
     g.add_edges_from(semantic_graph.edges)
     g.add_edges_from(semantic_graph.and_edges, dir="none")
     for a, b in semantic_graph.conflicts:
-        g.add_edge(a, b, dir="none", constraint=False, color="red", penwidth=7)
+        g.add_edge(a, b, style="tapered", dir="both", arrowhead=None,
+                  arrowtail=None,constraint=False, color="red", penwidth=7)
         g.add_subgraph([a,b], rank="same")
     return g.to_string()
 
