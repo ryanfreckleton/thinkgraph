@@ -17,7 +17,7 @@ from grako.parsing import graken, Parser
 from grako.util import re, RE_FLAGS
 
 
-__version__ = (2015, 9, 4, 3, 9, 17, 4)
+__version__ = (2015, 9, 12, 23, 46, 14, 5)
 
 __all__ = [
     'thinkingprocessesParser',
@@ -129,7 +129,9 @@ class thinkingprocessesParser(Parser):
                 self._token('obs')
             with self._option():
                 self._token('red')
-            self._error('expecting one of: inj obs red')
+            with self._option():
+                self._token('green')
+            self._error('expecting one of: green inj obs red')
 
 
 class thinkingprocessesSemantics(object):

@@ -8,10 +8,11 @@ Entity = collections.namedtuple("Entity", "id label cls")
 
 attrs = {
         None : dict(),
-        'inj' : dict(style="filled"),
+        'and' : dict(shape="ellipse", style=""),
+        'inj' : dict(style="filled", fillcolor='#B3CDE3'),
         'obs' : dict(shape="plaintext"),
-        'and' : dict(shape="ellipse"),
-        'red' : dict(color="red", fontcolor="red"),
+        'red' : dict(style="rounded,filled", fillcolor="#FBB4AE"),
+        'green' : dict(style="rounded,filled", fillcolor="#CCEBC5"),
       }
 
 class Semantics(object):
@@ -59,7 +60,8 @@ def output(g):
 def create_graph(semantic_graph):
     g = pygraphviz.AGraph(directed=True, rankdir="BT")
     g.node_attr['shape'] = 'rectangle'
-    g.node_attr['style'] = 'rounded'
+    g.node_attr['style'] = 'rounded,filled'
+    g.node_attr['fillcolor'] = '#FFFFCC'
     for identifier, label, cls in semantic_graph.nodes:
         g.add_node(identifier, label=label, **attrs[cls])
     g.add_edges_from(semantic_graph.edges)

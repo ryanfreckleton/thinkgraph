@@ -8,4 +8,4 @@ identifier = /\w+/ ;
 string = /.*/ ;
 
 NEWLINE = /\n/ ;
-CLASS = "inj" | "obs" | "red" ;
+CLASS = "inj" | "obs" | "red" | "green" ;
