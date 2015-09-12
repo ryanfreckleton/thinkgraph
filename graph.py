@@ -30,7 +30,8 @@ class Semantics(object):
         self.conflicts.add(tuple(ast))
 
     def label(self, ast):
-        self.nodes.add(Entity(ast.id, "%s. %s" % (ast.id, textwrap.fill(ast.label, 30)), ast.cls))
+        label = "%s. %s" % (ast.id, textwrap.fill(ast.label, 30))
+        self.nodes.add(Entity(ast.id, label, ast.cls))
 
     def relation(self, ast):
         if len(ast.source) == 1:
