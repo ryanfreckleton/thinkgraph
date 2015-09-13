@@ -10,7 +10,7 @@ attrs = {
         None : dict(),
         'and' : dict(shape="ellipse", style=""),
         'inj' : dict(style="filled", fillcolor='#B3CDE3'),
-        'obs' : dict(shape="plaintext"),
+        'obs' : dict(shape="plaintext", fillcolor="transparent"),
         'red' : dict(style="rounded,filled", fillcolor="#FBB4AE"),
         'green' : dict(style="rounded,filled", fillcolor="#CCEBC5"),
       }
@@ -68,7 +68,7 @@ def create_graph(semantic_graph):
     g.add_edges_from(semantic_graph.and_edges, dir="none")
     for a, b in semantic_graph.conflicts:
         g.add_edge(a, b, style="tapered", dir="both", arrowhead=None,
-                  arrowtail=None,constraint=False, color="red", penwidth=7)
+                  arrowtail=None, constraint=False, color="red", penwidth=7)
         g.add_subgraph([a,b], rank="same")
     return g.to_string()
 
