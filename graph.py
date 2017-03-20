@@ -21,6 +21,8 @@ class Semantics(object):
         self.nodes = set()
         self.edges = set()
         self.and_edges = set()
+        self.loop_edges = set()
+        self.and_loop_edges = set()
         self.conflicts = set()
 
     def next_id(self):
@@ -44,6 +46,16 @@ class Semantics(object):
                 self.and_edges.add((s, node_id))
             self.edges.add((node_id, ast.destination))
 
+    def loop(self, ast):
+        if len(ast.source) == 1:
+            self.loop_edges.add((ast.source[0], ast.destination))
+        else:
+            node_id = self.next_id()
+            self.nodes.add(Entity(node_id, "AND", "and"))
+            for s in ast.source:
+                self.and_loop_edges.add((s, node_id))
+            self.edges.add((node_id, ast.destination))
+
 # imperative
 def main(f):
     p = parser.thinkingprocessesParser()
@@ -58,7 +70,7 @@ def output(g):
 
 # pure
 def create_graph(semantic_graph):
-    g = pygraphviz.AGraph(directed=True, rankdir="BT")
+    g = pygraphviz.AGraph(directed=True, rankdir="BT", splines='ortho')
     g.node_attr['shape'] = 'rectangle'
     g.node_attr['style'] = 'rounded,filled'
     g.node_attr['fillcolor'] = '#FFFFCC'
@@ -66,6 +78,8 @@ def create_graph(semantic_graph):
         g.add_node(identifier, label=label, **attrs[cls])
     g.add_edges_from(semantic_graph.edges)
     g.add_edges_from(semantic_graph.and_edges, dir="none")
+    g.add_edges_from(semantic_graph.loop_edges, constraint=False)
+    g.add_edges_from(semantic_graph.and_loop_edges, dir="none", constraint=False)
     for a, b in semantic_graph.conflicts:
         g.add_edge(a, b, style="tapered", dir="both", arrowhead=None,
                   arrowtail=None, constraint=False, color="red", penwidth=7)

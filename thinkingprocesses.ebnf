@@ -1,6 +1,7 @@
-statements = { label | relation | conflict }+ $;
+statements = { label | relation | loop | conflict }+ $;
 label = id:identifier ("." cls:CLASS | ".")  label:string ;
 relation = source:and_stmt "->" destination:identifier NEWLINE ;
+loop = source:and_stmt "=>" destination:identifier NEWLINE ;
 and_stmt = @+:identifier {"and" @+:identifier} ;
 conflict = @+:identifier "<>" @+:identifier NEWLINE;
 
