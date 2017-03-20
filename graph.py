@@ -72,7 +72,7 @@ def output(g):
 
 # pure
 def create_graph(semantic_graph):
-    g = pygraphviz.AGraph(directed=True, rankdir="BT", splines='ortho')
+    g = pygraphviz.AGraph(directed=True, rankdir="BT")
     g.node_attr['shape'] = 'rectangle'
     g.node_attr['style'] = 'rounded,filled'
     g.node_attr['fillcolor'] = '#FFFFCC'
