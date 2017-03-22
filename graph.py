@@ -72,7 +72,10 @@ def output(g):
 
 # pure
 def create_graph(semantic_graph):
-    g = pygraphviz.AGraph(directed=True, rankdir="BT")
+    splines = 'spline'
+    if semantic_graph.loop_edges or semantic_graph.and_loop_edges:
+        splines = 'ortho'
+    g = pygraphviz.AGraph(directed=True, rankdir="BT", splines=splines)
     g.node_attr['shape'] = 'rectangle'
     g.node_attr['style'] = 'rounded,filled'
     g.node_attr['fillcolor'] = '#FFFFCC'
@@ -85,7 +88,7 @@ def create_graph(semantic_graph):
     for a, b in semantic_graph.conflicts:
         g.add_edge(a, b, style="tapered", dir="both", arrowhead=None,
                   arrowtail=None, constraint=False, color="red", penwidth=7)
-        g.add_subgraph([a,b], rank="same")
+        g.add_subgraph([a,b], name="cluster", rank="same", color=None)
     return g.to_string()
 
 if __name__ == "__main__":
