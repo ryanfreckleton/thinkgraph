@@ -1,4 +1,4 @@
-#!/home/ryan/miniconda3/bin/python
+#!/usr/bin/env python
 
 import collections
 import textwrap
