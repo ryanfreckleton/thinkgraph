@@ -3,7 +3,7 @@
 import collections
 import textwrap
 import sys
-import pygraphviz
+import graphviz
 import parser
 
 Entity = collections.namedtuple("Entity", "id label cls")
@@ -75,21 +75,27 @@ def create_graph(semantic_graph):
     splines = 'spline'
     if semantic_graph.loop_edges or semantic_graph.and_loop_edges:
         splines = 'ortho'
-    g = pygraphviz.AGraph(directed=True, rankdir="BT", splines=splines)
-    g.node_attr['shape'] = 'rectangle'
-    g.node_attr['style'] = 'rounded,filled'
-    g.node_attr['fillcolor'] = '#FFFFCC'
+    g = graphviz.Digraph(
+            graph_attr={'rankdir':'BT', 'splines':splines},
+            node_attr={
+            'shape':'rectangle', 'style':'rounded,filled', 'fillcolor':'#FFFFCC'
+            }
+    )
     for identifier, label, cls in semantic_graph.nodes:
-        g.add_node(identifier, label=label, **attrs[cls])
-    g.add_edges_from(semantic_graph.edges)
-    g.add_edges_from(semantic_graph.and_edges, dir="none")
-    g.add_edges_from(semantic_graph.loop_edges, constraint=False)
-    g.add_edges_from(semantic_graph.and_loop_edges, dir="none", constraint=False)
+        g.node(identifier, label=label, **attrs[cls])
+    g.edges(semantic_graph.edges)
+    for e in semantic_graph.and_edges:
+        g.edge(e, dir="none")
+    for e in semantic_graph.loop_edges:
+        g.edge(e, constraint=False)
+    for e in semantic_graph.and_loop_edges:
+        g.edge(e, dir="none", constraint=False)
     for a, b in semantic_graph.conflicts:
-        g.add_edge(a, b, style="tapered", dir="both", arrowhead=None,
-                  arrowtail=None, constraint=False, color="red", penwidth=7)
-        g.add_subgraph([a,b], name="cluster", rank="same", color=None)
-    return g.to_string()
+        subgraph = graphviz.Digraph('cluster', graph_attr={'rank':'same', 'color':'none'})
+        subgraph.edge(a, b, style="tapered", dir="both", arrowhead="none",
+                  arrowtail="none", constraint="false", color="red", penwidth="7")
+        g.subgraph(subgraph)
+    return g
 
 if __name__ == "__main__":
     if not sys.argv[1:]:
