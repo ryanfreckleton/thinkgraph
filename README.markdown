@@ -13,8 +13,9 @@ Installation
 
 TODO
 ====
-- Migrate to pure python graphviz
 - Only use one "AND"
 - Unit testing
 - Refactoring/clean up code
 - Handle unicode
+- Use argparse
+- Usage guide
