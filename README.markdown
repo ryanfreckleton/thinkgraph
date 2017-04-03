@@ -57,7 +57,6 @@ Styling of entitites is determined by a code after the period.
 
 TODO
 ====
-- setup.py – console script entry point
 - PyPI
 - Only use one "AND"
 - Unit testing
