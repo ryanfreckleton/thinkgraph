@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import collections
 import textwrap
 import sys
@@ -59,10 +57,15 @@ class Semantics(object):
             self.edges.add((node_id, ast.destination))
 
 # imperative
-def main(f):
+def main():
+    if not sys.argv[1:]:
+        f = sys.stdin
+    else:
+        f = open(sys.argv[1])
     p = parser.thinkingprocessesParser()
     semantic_graph = Semantics()
-    ast = p.parse(f.read(), rule_name="statements", semantics = semantic_graph)
+    with f:
+        ast = p.parse(f.read(), rule_name="statements", semantics = semantic_graph)
     g = create_graph(semantic_graph)
     output(g)
 
@@ -98,8 +101,4 @@ def create_graph(semantic_graph):
     return g
 
 if __name__ == "__main__":
-    if not sys.argv[1:]:
-        main(sys.stdin)
-    else:
-        with open(sys.argv[1]) as f:
-            main(f)
+    main()

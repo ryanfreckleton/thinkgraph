@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='thinkgraph',
@@ -6,7 +6,6 @@ setup(
     author='Ryan E. Freckleton',
     author_email='ryan.freckleton@gmail.com',
     packages=['thinkgraph'],
-    scripts=['bin/thinkgraph.py'],
     url='http://pypi.python.org/pypi/thinkgraph/',
     license='LICENSE.txt',
     description='TBD',
@@ -15,4 +14,7 @@ setup(
         "grako>=3.10.0",
         "graphviz>=0.6",
     ],
+    entry_points={
+        'console_scripts': ['thinkgraph = thinkgraph.graph:main']
+        },
 )
