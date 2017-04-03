@@ -10,12 +10,15 @@ Usage
 -----
 #### Installation ####
 
-  pip install toc
+  git clone https://github.com/ryanfreckleton/thinkgraph
+  cd thinkgraph
+  pip install .
 
 #### Hello World ####
 
 Here's a basic use of graphthink to create an "evaporating cloud" diagram.
 
+  # hello.tkg
   1. Try new things
   2. Don't try new things
   3. We must be satisfied
@@ -33,6 +36,10 @@ It is divided up into entities and relations.
 An entity is any line of the form:
 
     <identifier>. <label>
+
+Once you've created this file, running thinkgraph on it should generate a nice dot file.
+
+   thinkgraph hello.tkg
 
 Identifiers and Relations
 -------------------------
@@ -57,7 +64,7 @@ Styling of entitites is determined by a code after the period.
 
 TODO
 ====
-- PyPI
+- Get it on PyPI
 - Only use one "AND"
 - Unit testing
 - Refactoring/clean up code
