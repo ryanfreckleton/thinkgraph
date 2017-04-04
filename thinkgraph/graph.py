@@ -88,11 +88,11 @@ def create_graph(semantic_graph):
         g.node(identifier, label=label, **attrs[cls])
     g.edges(semantic_graph.edges)
     for e in semantic_graph.and_edges:
-        g.edge(e, dir="none")
+        g.edge(*e, dir="none")
     for e in semantic_graph.loop_edges:
-        g.edge(e, constraint=False)
+        g.edge(*e, constraint="false")
     for e in semantic_graph.and_loop_edges:
-        g.edge(e, dir="none", constraint=False)
+        g.edge(*e, dir="none", constraint="false")
     for a, b in semantic_graph.conflicts:
         subgraph = graphviz.Digraph('cluster', graph_attr={'rank':'same', 'color':'none'})
         subgraph.edge(a, b, style="tapered", dir="both", arrowhead="none",
