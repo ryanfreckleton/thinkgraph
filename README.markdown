@@ -10,26 +10,26 @@ Usage
 -----
 #### Installation ####
 
-  git clone https://github.com/ryanfreckleton/thinkgraph
-  cd thinkgraph
-  pip install .
+    git clone https://github.com/ryanfreckleton/thinkgraph
+    cd thinkgraph
+    pip install .
 
 #### Hello World ####
 
 Here's a basic use of graphthink to create an "evaporating cloud" diagram.
 
-  # hello.tkg
-  1. Try new things
-  2. Don't try new things
-  3. We must be satisfied
-  4. We must be secure
-  5. Happiness
-
-  1 <> 2
-  1 -> 3
-  2 -> 4
-  3 -> 5
-  4 -> 5
+    # hello.tkg
+    1. Try new things
+    2. Don't try new things
+    3. We must be satisfied
+    4. We must be secure
+    5. Happiness
+    
+    1 <> 2
+    1 -> 3
+    2 -> 4
+    3 -> 5
+    4 -> 5
 
 graphthink uses a very simple language.
 It is divided up into entities and relations.
@@ -39,7 +39,7 @@ An entity is any line of the form:
 
 Once you've created this file, running thinkgraph on it should generate a nice dot file.
 
-   thinkgraph hello.tkg
+     thinkgraph hello.tkg
 
 Identifiers and Relations
 -------------------------
@@ -48,18 +48,18 @@ Labels are ASCII sentences and continue until the end of the line.
 
 Relations are how relationships between entiteis are graphed. The relationships are:
 
-  <>  conflict
-  ->  cause
-  =>  feedback loop
+    <>  conflict
+    ->  cause
+    =>  feedback loop
 
 Color/Styling
 -------------
 Styling of entitites is determined by a code after the period.
 
-  1.inj An action
-  2.obs An obstacle
-  3.green Something green (and good)
-  4.red Something red and (bad)
+    1.inj An action
+    2.obs An obstacle
+    3.green Something green (and good)
+    4.red Something red and (bad)
 
 
 TODO
