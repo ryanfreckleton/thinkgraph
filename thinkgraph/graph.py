@@ -1,3 +1,4 @@
+from __future__ import print_function
 import collections
 import textwrap
 import sys
@@ -71,7 +72,7 @@ def main():
 
 # imperative
 def output(g):
-    print g
+    print(g)
 
 # pure
 def create_graph(semantic_graph):
