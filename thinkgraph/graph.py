@@ -3,7 +3,7 @@ import collections
 import textwrap
 import sys
 import graphviz
-import parser
+from . import parser
 
 Entity = collections.namedtuple("Entity", "id label cls")
 
