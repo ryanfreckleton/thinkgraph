@@ -46,7 +46,7 @@ Identifiers and Relations
 Identifiers can be numbers, words, or letters.
 Labels are ASCII sentences and continue until the end of the line.
 
-Relations are how relationships between entiteis are graphed. The relationships are:
+Relations are how relationships between entities are graphed. The relationships are:
 
     <>  conflict
     ->  cause
@@ -54,7 +54,7 @@ Relations are how relationships between entiteis are graphed. The relationships 
 
 Color/Styling
 -------------
-Styling of entitites is determined by a code after the period.
+Styling of entities is determined by a code after the period.
 
     1.inj An action
     2.obs An obstacle
