@@ -8,5 +8,5 @@ conflict = @+:identifier "<>" @+:identifier NEWLINE;
 identifier = /\w+/ ;
 string = /.*/ ;
 
-NEWLINE = /\n/ ;
+NEWLINE = /\r?\n/ ;
 CLASS = "inj" | "obs" | "red" | "green" ;

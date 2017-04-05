@@ -13,32 +13,55 @@
 
 from __future__ import print_function, division, absolute_import, unicode_literals
 
+from grako.buffering import Buffer
 from grako.parsing import graken, Parser
 from grako.util import re, RE_FLAGS, generic_main  # noqa
 
 
-__version__ = (2017, 3, 20, 5, 16, 19, 0)
+KEYWORDS = {}
 
-__all__ = [
-    'thinkingprocessesParser',
-    'thinkingprocessesSemantics',
-    'main'
-]
 
-KEYWORDS = set([])
+class thinkingprocessesBuffer(Buffer):
+    def __init__(
+        self,
+        text,
+        whitespace=None,
+        nameguard=None,
+        comments_re=None,
+        eol_comments_re=None,
+        ignorecase=None,
+        namechars='',
+        **kwargs
+    ):
+        super(thinkingprocessesBuffer, self).__init__(
+            text,
+            whitespace=whitespace,
+            nameguard=nameguard,
+            comments_re=comments_re,
+            eol_comments_re=eol_comments_re,
+            ignorecase=ignorecase,
+            namechars=namechars,
+            **kwargs
+        )
 
 
 class thinkingprocessesParser(Parser):
-    def __init__(self,
-                 whitespace=None,
-                 nameguard=None,
-                 comments_re=None,
-                 eol_comments_re=None,
-                 ignorecase=None,
-                 left_recursion=True,
-                 keywords=KEYWORDS,
-                 namechars='',
-                 **kwargs):
+    def __init__(
+        self,
+        whitespace=None,
+        nameguard=None,
+        comments_re=None,
+        eol_comments_re=None,
+        ignorecase=None,
+        left_recursion=False,
+        parseinfo=True,
+        keywords=None,
+        namechars='',
+        buffer_class=thinkingprocessesBuffer,
+        **kwargs
+    ):
+        if keywords is None:
+            keywords = KEYWORDS
         super(thinkingprocessesParser, self).__init__(
             whitespace=whitespace,
             nameguard=nameguard,
@@ -46,8 +69,10 @@ class thinkingprocessesParser(Parser):
             eol_comments_re=eol_comments_re,
             ignorecase=ignorecase,
             left_recursion=left_recursion,
+            parseinfo=parseinfo,
             keywords=keywords,
             namechars=namechars,
+            buffer_class=buffer_class,
             **kwargs
         )
 
@@ -83,9 +108,8 @@ class thinkingprocessesParser(Parser):
                 self._error('expecting one of: .')
         self._string_()
         self.name_last_node('label')
-
         self.ast._define(
-            ['id', 'cls', 'label'],
+            ['cls', 'id', 'label'],
             []
         )
 
@@ -97,9 +121,8 @@ class thinkingprocessesParser(Parser):
         self._identifier_()
         self.name_last_node('destination')
         self._NEWLINE_()
-
         self.ast._define(
-            ['source', 'destination'],
+            ['destination', 'source'],
             []
         )
 
@@ -111,9 +134,8 @@ class thinkingprocessesParser(Parser):
         self._identifier_()
         self.name_last_node('destination')
         self._NEWLINE_()
-
         self.ast._define(
-            ['source', 'destination'],
+            ['destination', 'source'],
             []
         )
 
@@ -147,7 +169,7 @@ class thinkingprocessesParser(Parser):
 
     @graken()
     def _NEWLINE_(self):
-        self._pattern(r'\n')
+        self._pattern(r'\r?\n')
 
     @graken()
     def _CLASS_(self):
@@ -195,40 +217,21 @@ class thinkingprocessesSemantics(object):
         return ast
 
 
-def main(
-        filename,
-        startrule,
-        trace=False,
-        whitespace=None,
-        nameguard=None,
-        comments_re=None,
-        eol_comments_re=None,
-        ignorecase=None,
-        left_recursion=True,
-        **kwargs):
-
+def main(filename, startrule, **kwargs):
     with open(filename) as f:
         text = f.read()
-    whitespace = whitespace or None
-    parser = thinkingprocessesParser(parseinfo=False)
-    ast = parser.parse(
-        text,
-        startrule,
-        filename=filename,
-        trace=trace,
-        whitespace=whitespace,
-        nameguard=nameguard,
-        ignorecase=ignorecase,
-        **kwargs)
-    return ast
+    parser = thinkingprocessesParser()
+    return parser.parse(text, startrule, filename=filename, **kwargs)
+
 
 if __name__ == '__main__':
     import json
+    from grako.util import asjson
+
     ast = generic_main(main, thinkingprocessesParser, name='thinkingprocesses')
     print('AST:')
     print(ast)
     print()
     print('JSON:')
-    print(json.dumps(ast, indent=2))
+    print(json.dumps(asjson(ast), indent=2))
     print()
-
