@@ -16,7 +16,7 @@ Usage
 
 #### Hello World ####
 
-Here's a basic use of graphthink to create an "evaporating cloud" diagram.
+Here's a basic use of thinkgraph to create an "evaporating cloud" diagram.
 
     # hello.tkg
     1. Try new things
@@ -31,7 +31,7 @@ Here's a basic use of graphthink to create an "evaporating cloud" diagram.
     3 -> 5
     4 -> 5
 
-graphthink uses a very simple language.
+thinkgraph uses a very simple language.
 It is divided up into entities and relations.
 An entity is any line of the form:
 
