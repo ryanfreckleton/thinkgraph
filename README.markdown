@@ -56,10 +56,11 @@ Color/Styling
 -------------
 Styling of entities is determined by a code after the period.
 
-    1.inj An action
-    2.obs An obstacle
-    3.green Something green (and good)
-    4.red Something red and (bad)
+    1.i An action
+    2.o An obstacle
+    3.g Something green
+    4.r Something red
+    5.y Something yellow
 
 
 TODO
