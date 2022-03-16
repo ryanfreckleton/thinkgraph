@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "thinkgraph"
+version = "0.1.0"
+description = "Domain Specific Language for making Logic Trees as used in Theory of Constraints and The Logical Thinking Processes."
+authors = ["Ryan Freckleton <ryan.freckleton@gmail.com>"]
+license = "GPL-3.0"
+
+[tool.poetry.scripts]
+thinkgraph = 'thinkgraph.graph:main'
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+graphviz = "^0.19.1"
+grako = "^3.99.9"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
