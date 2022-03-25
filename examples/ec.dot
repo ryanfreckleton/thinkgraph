@@ -1,0 +1,32 @@
+digraph {
+	graph [rankdir=BT splines=spline]
+	node [fillcolor="#FFFFFF" shape=rectangle style="rounded,filled"]
+	E [label="E. Manage the engineering process
+well."]
+	B [label="B. Modify weights during
+development."]
+	A [label="A. Only set weights during
+estimation."]
+	C [label="C. Have accurate initial
+estimates for capacity
+planning. Don't encourage
+staff to do wasteful busywork
+or focus on the wrong things.
+If changing weights is
+allowed, it will become
+obligatory so that people
+don't look bad in comparison."]
+	D [label="D. Have accurate signal when
+staff are blocked,
+underperforming or working
+overtime."]
+	A -> C
+	B -> D
+	D -> E
+	C -> E
+	subgraph cluster {
+		graph [color=none rank=same]
+		A -> B [arrowhead=none arrowtail=none color=red constraint=false dir=both penwidth=7 style=tapered]
+	}
+}
+

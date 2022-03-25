@@ -1,0 +1,12 @@
+A. Only set weights during estimation.
+B. Modify weights during development.
+C. Have accurate initial estimates for capacity planning. Don't encourage staff to do wasteful busywork or focus on the wrong things.  If changing weights is allowed, it will become obligatory so that people don't look bad in comparison.
+D. Have accurate signal when staff are blocked, underperforming or working overtime.
+E. Manage the engineering process well.
+
+A <> B
+
+A -> C
+B -> D
+C -> E
+D -> E
