@@ -175,14 +175,18 @@ class thinkingprocessesParser(Parser):
     def _CLASS_(self):
         with self._choice():
             with self._option():
-                self._token('inj')
+                self._token('r')
             with self._option():
-                self._token('obs')
+                self._token('y')
             with self._option():
-                self._token('red')
+                self._token('b')
             with self._option():
-                self._token('green')
-            self._error('expecting one of: green inj obs red')
+                self._token('g')
+            with self._option():
+                self._token('sq')
+            with self._option():
+                self._token('no')
+            self._error('expecting one of: b g no r sq y')
 
 
 class thinkingprocessesSemantics(object):

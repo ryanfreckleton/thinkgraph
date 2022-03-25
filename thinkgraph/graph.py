@@ -1,20 +1,26 @@
 from __future__ import print_function
+
 import collections
-import textwrap
 import sys
+import textwrap
+
 import graphviz
+
 from . import parser
 
 Entity = collections.namedtuple("Entity", "id label cls")
 
 attrs = {
-        None : dict(),
-        'and' : dict(shape="ellipse", style=""),
-        'inj' : dict(style="filled", fillcolor='#B3CDE3'),
-        'obs' : dict(shape="plaintext", fillcolor="transparent"),
-        'red' : dict(style="rounded,filled", fillcolor="#FBB4AE"),
-        'green' : dict(style="rounded,filled", fillcolor="#CCEBC5"),
-      }
+    None: dict(),
+    "and": dict(shape="ellipse", style=""),
+    "b": dict(style="rounded,filled", fillcolor="#B3CDE3"),
+    "no": dict(shape="plaintext", fillcolor="transparent"),
+    "sq": dict(style="solid"),
+    "r": dict(style="rounded,filled", fillcolor="#FBB4AE"),
+    "g": dict(style="rounded,filled", fillcolor="#CCEBC5"),
+    "y": dict(style="rounded,filled", fillcolor="#FFFFCC"),
+}
+
 
 class Semantics(object):
     def __init__(self):
@@ -28,7 +34,7 @@ class Semantics(object):
 
     def next_id(self):
         self.i += 1
-        return '_%s' % self.i
+        return "_%s" % self.i
 
     def conflict(self, ast):
         self.conflicts.add(tuple(ast))
@@ -57,6 +63,7 @@ class Semantics(object):
                 self.and_loop_edges.add((s, node_id))
             self.edges.add((node_id, ast.destination))
 
+
 # imperative
 def main():
     if not sys.argv[1:]:
@@ -66,24 +73,28 @@ def main():
     p = parser.thinkingprocessesParser()
     semantic_graph = Semantics()
     with f:
-        ast = p.parse(f.read(), rule_name="statements", semantics = semantic_graph)
+        ast = p.parse(f.read(), rule_name="statements", semantics=semantic_graph)
     g = create_graph(semantic_graph)
     output(g)
+
 
 # imperative
 def output(g):
     print(g)
 
+
 # pure
 def create_graph(semantic_graph):
-    splines = 'spline'
+    splines = "spline"
     if semantic_graph.loop_edges or semantic_graph.and_loop_edges:
-        splines = 'ortho'
+        splines = "ortho"
     g = graphviz.Digraph(
-            graph_attr={'rankdir':'BT', 'splines':splines},
-            node_attr={
-            'shape':'rectangle', 'style':'rounded,filled', 'fillcolor':'#FFFFCC'
-            }
+        graph_attr={"rankdir": "BT", "splines": splines},
+        node_attr={
+            "shape": "rectangle",
+            "style": "rounded,filled",
+            "fillcolor": "#FFFFFF",
+        },
     )
     for identifier, label, cls in semantic_graph.nodes:
         g.node(identifier, label=label, **attrs[cls])
@@ -95,11 +106,23 @@ def create_graph(semantic_graph):
     for e in semantic_graph.and_loop_edges:
         g.edge(*e, dir="none", constraint="false")
     for a, b in semantic_graph.conflicts:
-        subgraph = graphviz.Digraph('cluster', graph_attr={'rank':'same', 'color':'none'})
-        subgraph.edge(a, b, style="tapered", dir="both", arrowhead="none",
-                  arrowtail="none", constraint="false", color="red", penwidth="7")
+        subgraph = graphviz.Digraph(
+            "cluster", graph_attr={"rank": "same", "color": "none"}
+        )
+        subgraph.edge(
+            a,
+            b,
+            style="tapered",
+            dir="both",
+            arrowhead="none",
+            arrowtail="none",
+            constraint="false",
+            color="red",
+            penwidth="7",
+        )
         g.subgraph(subgraph)
     return g
+
 
 if __name__ == "__main__":
     main()

@@ -9,4 +9,4 @@ identifier = /\w+/ ;
 string = /.*/ ;
 
 NEWLINE = /\r?\n/ ;
-CLASS = "inj" | "obs" | "red" | "green" ;
+CLASS = "r" | "y" | "b" | "g" | "sq" | "no" ;
