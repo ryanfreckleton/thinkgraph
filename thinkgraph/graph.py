@@ -96,7 +96,7 @@ def create_graph(semantic_graph):
             "fillcolor": "#FFFFFF",
         },
     )
-    for identifier, label, cls in semantic_graph.nodes:
+    for identifier, label, cls in sorted(semantic_graph.nodes):
         g.node(identifier, label=label, **attrs[cls])
     g.edges(semantic_graph.edges)
     for e in semantic_graph.and_edges:
