@@ -5,7 +5,7 @@ loop = source:and_stmt "=>" destination:identifier NEWLINE ;
 and_stmt = @+:identifier {"and" @+:identifier} ;
 conflict = @+:identifier "<>" @+:identifier NEWLINE;
 
-identifier = /\w+/ ;
+identifier = /[\w-]+/ ;
 string = /.*/ ;
 
 NEWLINE = /\r?\n/ ;

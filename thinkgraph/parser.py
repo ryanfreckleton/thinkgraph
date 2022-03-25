@@ -161,7 +161,7 @@ class thinkingprocessesParser(Parser):
 
     @graken()
     def _identifier_(self):
-        self._pattern(r'\w+')
+        self._pattern(r'[\w-]+')
 
     @graken()
     def _string_(self):
